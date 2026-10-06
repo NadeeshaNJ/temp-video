@@ -1,0 +1,76 @@
+1
+00:00:00,180 --> 00:00:01,037
+No signal.
+
+2
+00:00:01,680 --> 00:00:02,606
+No network.
+
+3
+00:00:03,180 --> 00:00:04,586
+No way to call for help.
+
+4
+00:00:06,050 --> 00:00:11,888
+Meet Ranger! A pocket radio that keeps you connected. No towers, no SIM card, no internet!
+
+5
+00:00:12,200 --> 00:00:18,243
+Rangers talk directly to each other over long range LoRa radio. Up to eight kilometers!
+
+6
+00:00:18,400 --> 00:00:23,518
+And every Ranger relays for the others, so the mesh keeps on growing. Fully encrypted!
+
+7
+00:00:24,250 --> 00:00:25,126
+Send texts!
+
+8
+00:00:27,250 --> 00:00:28,146
+Push to talk!
+
+9
+00:00:30,250 --> 00:00:31,178
+Track your team!
+
+10
+00:00:33,250 --> 00:00:34,467
+Share your location!
+
+11
+00:00:36,250 --> 00:00:37,990
+Hit SOS to alert everyone!
+
+12
+00:00:39,250 --> 00:00:41,772
+Even join from your phone. No app needed!
+
+13
+00:00:42,150 --> 00:00:43,136
+Rescue teams!
+
+14
+00:00:44,650 --> 00:00:45,786
+Remote patrols!
+
+15
+00:00:47,150 --> 00:00:48,114
+Lost hikers!
+
+16
+00:00:49,650 --> 00:00:51,863
+Anyone, anywhere the network can't reach!
+
+17
+00:00:53,200 --> 00:01:02,804
+Designed from scratch, on a custom PCB. With an ESP32, a LoRa radio, GPS, and a battery that lasts for days on standby.
+
+18
+00:01:03,400 --> 00:01:05,390
+All for around three thousand rupees!
+
+19
+00:01:06,800 --> 00:01:10,485
+Ranger. Stay connected, anywhere. Scan the code to learn more!
+
