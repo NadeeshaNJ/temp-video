@@ -11,7 +11,7 @@ os.makedirs(OUT, exist_ok=True)
 FONT = "/usr/share/fonts/opentype/inter/Inter-{}.otf"
 MINT = (0x7C, 0xC4, 0xA0)
 KEY_SPEC = {"esp32": "2 cores, 240 MHz", "lora": "27 dBm · up to 8 km", "oled": "128 × 64 px · 0.96 inch",
-            "mic": "24-bit I2S digital", "amp": "Class D · I2S in", "gps": "u-blox M10 + compass"}
+            "mic": "24-bit I2S mic + speaker", "battery": "Rechargeable via USB-C", "gps": "u-blox M10 + compass"}
 
 
 def f(w, s):
@@ -62,10 +62,22 @@ def draw_part(key, d, cx, cy):
             d.rectangle([cx - 110, cy - 64 + k * 22, cx - 110 + w_, cy - 54 + k * 22], fill=(235, 240, 240, 255))
         d.polygon([(cx - 50, cy + 50), (cx + 50, cy + 50), (cx + 40, cy + 110), (cx - 40, cy + 110)], fill=(214, 150, 50, 255))
     elif key == "mic":
-        d.rounded_rectangle([cx - 70, cy - 56, cx + 70, cy + 56], 8, fill=(190, 192, 196, 255), outline=(120, 124, 130, 255), width=3)
-        d.ellipse([cx - 12, cy - 12, cx + 12, cy + 12], fill=(30, 30, 34, 255))
-        d.text((cx, cy + 34), "ICS-43434", font=f("Bold", 16), fill=(80, 84, 90, 255), anchor="mm")
-        d.text((cx, cy + 96), "3.5 × 2.7 mm (shown enlarged)", font=f("Medium", 18), fill=(150, 160, 155, 255), anchor="mm")
+        mx = cx - 95
+        d.rounded_rectangle([mx - 56, cy - 46, mx + 56, cy + 46], 8, fill=(190, 192, 196, 255), outline=(120, 124, 130, 255), width=3)
+        d.ellipse([mx - 10, cy - 10, mx + 10, cy + 10], fill=(30, 30, 34, 255))
+        d.text((mx, cy + 28), "MIC", font=f("Bold", 16), fill=(80, 84, 90, 255), anchor="mm")
+        sx = cx + 100
+        d.ellipse([sx - 92, cy - 92, sx + 92, cy + 92], fill=(30, 30, 34, 255), outline=(120, 124, 130, 255), width=4)
+        d.ellipse([sx - 64, cy - 64, sx + 64, cy + 64], fill=(52, 54, 58, 255))
+        d.ellipse([sx - 26, cy - 26, sx + 26, cy + 26], fill=(150, 152, 158, 255))
+        d.text((cx - 18, cy), "+", font=f("Bold", 40), fill=(180, 192, 185, 255), anchor="mm")
+    elif key == "battery":
+        d.rounded_rectangle([cx - 150, cy - 70, cx + 120, cy + 70], 16, fill=(196, 198, 204, 255), outline=(130, 134, 140, 255), width=3)
+        d.rectangle([cx - 150, cy - 70, cx - 120, cy + 70], fill=(170, 172, 178, 255))
+        d.text((cx - 10, cy - 18), "3.7 V", font=f("ExtraBold", 34), fill=(60, 64, 70, 255), anchor="mm")
+        d.text((cx - 10, cy + 22), "1000 mAh", font=f("Bold", 26), fill=(80, 84, 90, 255), anchor="mm")
+        d.line([cx + 120, cy - 20, cx + 160, cy - 20, cx + 170, cy - 40], fill=(200, 40, 40, 255), width=6)
+        d.line([cx + 120, cy + 20, cx + 160, cy + 20, cx + 172, cy + 4], fill=(20, 20, 20, 255), width=6)
     elif key == "amp":
         d.rectangle([cx - 66, cy - 66, cx + 66, cy + 66], fill=(24, 24, 28, 255), outline=(70, 70, 76, 255), width=2)
         for side in "lrtb":
@@ -107,6 +119,11 @@ def card(c):
 
 if __name__ == "__main__":
     comps = json.load(open(sys.argv[1]))["components"]
+    for c in comps:
+        if c["key"] == "mic":
+            c.update(name="Mic + speaker", role="Audio")
+        if c["key"] == "amp":
+            c.update(key="battery", name="3.7 V 1000 mAh LiPo", role="Battery")
     for c in comps:
         card(c)
     # preview

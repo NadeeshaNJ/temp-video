@@ -224,7 +224,7 @@ def sfx():
 
 if __name__ == "__main__":
     if os.environ.get("V2"):
-        score()
+        score(195.0, END=184.0)
     else:
         sfx()
         score(130.0, 10.0, 15.5, 20.0, 120.0, (80, 104))

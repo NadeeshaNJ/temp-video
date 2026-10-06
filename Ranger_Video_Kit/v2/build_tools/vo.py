@@ -14,7 +14,7 @@ os.makedirs(OUT, exist_ok=True)
 LINES = {
     "hook_trail": "Far from any tower, a phone shows just one thing. No signal.",
     "hook_collapse": "When a building collapses, the person who needs help most can't call for it.",
-    "reveal": "Meet Ranger. A pocket radio messenger that works with no towers, no SIM card, and no internet.",
+    "reveal": "Meet Ranger. A pocket radio messenger that works with no towers, no sim card, and no internet.",
     "range": "Its long range LoRa radio reaches up to eight kilometers in open line of sight. "
              "At shorter range, it moves data at up to two hundred and two kilobits per second.",
     "mesh": "And every Ranger is also a relay. Messages hop from device to device, forming a mesh. "
@@ -34,7 +34,7 @@ LINES = {
     "uc_rubble": "Under the rubble, a survivor's Ranger carries their voice to the rescue team above.",
     "uc_jungle": "Lost in the jungle, a hiker's message hops across the mesh until it reaches the search team.",
     "uc_trail": "And on the trail, friends always know where each other are.",
-    "parts": "Inside: an ESP32 brain, a LoRa radio, an OLED screen, a digital mic, an amplifier, and GPS with a compass.",
+    "parts": "Inside: an ESP32, a LoRa radio, an OLED screen, a mic and speaker, GPS and a compass, and a three point seven volt, thousand milliamp hour lie-poh battery that can stay on standby for days.",
     "cost": "Built to scale, Ranger is expected to cost around three thousand rupees per unit in mass production.",
     "end": "Ranger. When the network goes down, you stay connected. Scan the code to see how it's built.",
 }
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     k = Kokoro(sys.argv[1] + "/kokoro-v1.0.onnx", sys.argv[1] + "/voices-v1.0.bin")
     man = {}
     for key, text in LINES.items():
-        s, sr = k.create(text, voice="am_michael", speed=1.12 if key == "parts" else 1.0, lang="en-us")
+        s, sr = k.create(text, voice="am_michael", speed=1.15 if key == "parts" else 1.0, lang="en-us")
         s = trim(np.asarray(s, np.float32), sr)
         s = s / (np.max(np.abs(s)) + 1e-9) * 0.7
         path = os.path.join(OUT, f"vo_{key}.wav")

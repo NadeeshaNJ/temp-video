@@ -7,7 +7,7 @@ Far from any tower, a phone shows just one thing. No signal.
 When a building collapses, the person who needs help most can't call for it.
 
 3
-00:00:24,000 --> 00:00:31,205
+00:00:24,000 --> 00:00:30,915
 Meet Ranger. A pocket radio messenger that works with no towers, no SIM card, and no internet.
 
 4
@@ -71,14 +71,14 @@ Lost in the jungle, a hiker's message hops across the mesh until it reaches the 
 And on the trail, friends always know where each other are.
 
 19
-00:02:35,400 --> 00:02:44,595
-Inside: an ESP32 brain, a LoRa radio, an OLED screen, a digital mic, an amplifier, and GPS with a compass.
+00:02:35,400 --> 00:02:49,437
+Inside: an ESP32, a LoRa radio, an OLED screen, a mic and speaker, GPS and a compass, and a 3.7 V, 1000 mAh LiPo battery that can stay on standby for days.
 
 20
-00:02:45,600 --> 00:02:52,202
+00:02:50,600 --> 00:02:57,202
 Built to scale, Ranger is expected to cost around three thousand rupees per unit in mass production.
 
 21
-00:03:00,600 --> 00:03:06,503
+00:03:05,600 --> 00:03:11,503
 Ranger. When the network goes down, you stay connected. Scan the code to see how it's built.
 

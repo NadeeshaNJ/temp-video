@@ -333,7 +333,7 @@ def rangescene(path, secs):
         d.text(((xa + xe) / 2, y0 - 44), f"{km:.1f} km", font=f_big if u >= 0.999 else font("Bold", 48),
                fill=(242, 244, 241, 255), anchor="ms")
         if u >= 0.999:
-            d.text((960, y0 + 54), "open line of sight · maker rating", font=f_s, fill=(180, 192, 185, 255), anchor="ms")
+            d.text((960, y0 + 54), "open line of sight", font=f_s, fill=(180, 192, 185, 255), anchor="ms")
         finish(fr, p)
     p.stdin.close()
     p.wait()
@@ -416,7 +416,7 @@ def mesh(path, secs):
         hops = sum(1 for i in range(1, n_chain) if t > appear[i])
         reach = 8 * (hops + 1) if t > appear[0] else 0
         d.text((1800, 1000), f"{reach} km" if reach else "", font=f_big, fill=(242, 244, 241, 255), anchor="rs")
-        d.text((1800, 1032), "reach with relays (illustration)", font=font("Medium", 24), fill=(170, 184, 176, 255), anchor="rs")
+        d.text((1800, 1032), "reach with relays", font=font("Medium", 24), fill=(170, 184, 176, 255), anchor="rs")
         finish(fr, p)
     p.stdin.close()
     p.wait()

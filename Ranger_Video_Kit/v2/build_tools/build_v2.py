@@ -12,7 +12,7 @@ W = b.W
 A1 = os.path.join(W, "build/assets")
 V2 = os.path.join(W, "build/v2")
 KIT = b.KIT
-END = 190.0
+END = 195.0
 
 T1, T2, T3, T4, G1, G2, V1, G3, G4, G5, G6, VB, BG, SFX1, SFX2, VOICE, VO, MUSIC = range(18)
 LANES = ["text"] * 4 + ["shape", "shape", "video", "shape", "shape", "shape", "shape", "video", "shape",
@@ -70,8 +70,8 @@ def story_caption(t0, t1, kicker, line, red=False):
 def bg_music():
     b.place("bg.png", BG, 0, END)
     m = call("place_clip", {"asset": "music_v2.wav", "at": 0, "track": MUSIC})["id"]
-    keys = [(0.0, 0.35), (17.5, 0.35), (18.2, 0.5), (23.6, 0.5), (24.2, 0.14), (172.6, 0.14), (173.3, 0.42),
-            (180.2, 0.42), (180.6, 0.2), (186.6, 0.2), (187.3, 0.45)]
+    keys = [(0.0, 0.35), (17.5, 0.35), (18.2, 0.5), (23.6, 0.5), (24.2, 0.14), (177.6, 0.14), (178.3, 0.42),
+            (185.2, 0.42), (185.6, 0.2), (191.6, 0.2), (192.3, 0.45)]
     apply([{"tool": "set_volume", "args": {"clip": m, "at": t, "value": v}} for t, v in keys])
 
 
@@ -92,7 +92,6 @@ def s_reveal():
     lb = (260, 70, 1400, 810.5)
     lg = b.place("oled_01.png", G3, 22.5, 4.0, lb, fade=(0.2, 0.3))
     apply(b.pop(lg, 22.5, lb, 0.98, 0.2) + b.push(lg, 22.7, 26.5, lb, 1.03))
-    call("place_clip", {"asset": "ranger_startup_voice_8khz.wav", "at": 22.5, "track": VOICE})
     vo("reveal", 24.0)
     hb2 = (250, 30, 699.5, 1020)
     h2 = b.place("hero_front.png", G4, 26.3, 5.7, hb2, fade=(0.3, 0.4))
@@ -106,7 +105,7 @@ def s_range():
     b.place("sc_range.mp4", VB, 32.0, 13.0, fade=(0.4, 0.3))
     vo("range", 32.5)
     b.text(T1, 33.4, 38.8, "Up to 8 km", (120, 100, 1000, 130), style(110, 800))
-    b.text(T2, 33.8, 38.8, "Open line of sight (maker rating)", (124, 240, 1000, 60), style(36, 500, MIST, spacing=0),
+    b.text(T2, 33.8, 38.8, "Open line of sight", (124, 240, 1000, 60), style(36, 500, MIST, spacing=0),
            anim_in="fade")
     b.text(T1, 39.0, 44.8, "Up to 202 kbps", (120, 100, 1100, 130), style(110, 800))
     b.text(T2, 39.4, 44.8, "LoRa data rate (SX1280) at shorter range", (124, 240, 1100, 60),
@@ -210,24 +209,22 @@ def s_uses():
 
 
 def s_parts(T0=155.0):
-    keys = ["esp32", "lora", "oled", "mic", "amp", "gps"]
+    keys = ["esp32", "lora", "oled", "mic", "battery", "gps"]
     lanes = [G1, G2, G3, G4, G5, G6]
     cw, ch = 539.4, 434.8  # 620 x 500 card at 0.87
     xs, ys = (95, 690, 1285), (110, 560)
-    b.text(T4, T0 + 0.2, T0 + 9.8, "WHAT'S INSIDE", (96, 40, 1728, 46),
+    b.text(T4, T0 + 0.2, T0 + 14.8, "WHAT'S INSIDE", (96, 40, 1728, 46),
            style(28, 700, MINT, align="center", spacing=4, shadow=False), anim_in="fade", srt=False)
-    b.text(T3, T0 + 0.6, T0 + 9.8, "Parts shown as illustrations", (96, 1020, 1728, 40),
-           style(22, 500, MIST, align="center", spacing=0, shadow=False), anim_in="fade", srt=False)
     for k, key in enumerate(keys):
-        t0 = round(T0 + 0.3 + 0.55 * k, 3)
+        t0 = round(T0 + 0.3 + 1.6 * k, 3)
         box = (xs[k % 3], ys[k // 3], cw, ch)
-        c = b.place(f"part_{key}.png", lanes[k], t0, round(T0 + 10.0 - t0, 3), box, fade=(0.25, 0.3))
+        c = b.place(f"part_{key}.png", lanes[k], t0, round(T0 + 15.0 - t0, 3), box, fade=(0.25, 0.3))
         apply(b.pop(c, t0, box, 0.94, 0.35))
         b.sfx("sfx_pop.wav", t0, lane=SFX1 if k % 2 == 0 else SFX2, vol=0.3)
     vo("parts", T0 + 0.4)
 
 
-def s_cost(T0=165.0):
+def s_cost(T0=170.0):
     hb = (150, 60, 658.4, 960)
     h = b.place("hero_front.png", G3, T0, 8.0, hb, fade=(0.4, 0.35))
     apply(b.push(h, T0, T0 + 8.0, hb, 1.04))
@@ -241,7 +238,7 @@ def s_cost(T0=165.0):
     vo("cost", T0 + 0.6)
 
 
-def s_built(T0=173.0):
+def s_built(T0=178.0):
     b.text(T2, T0 + 0.2, T0 + 5.8, "OPEN-SOURCE HARDWARE & FIRMWARE", (96, 70, 1728, 46),
            style(28, 700, MINT, align="center", spacing=4, shadow=False), anim_in="fade", srt=False)
     c = b.place("card_proto.png", G3, T0, 2.1, (442, 150, 1036, 638.6), fade=(0.3, 0.0))
@@ -258,14 +255,13 @@ def s_built(T0=173.0):
     b.sfx("sfx_whoosh.wav", T0 - 0.2, lane=SFX2, vol=0.5)
 
 
-def s_end(T0=179.0):
+def s_end(T0=184.0):
     hb = (110, 20, 548.4, 800)
     h = b.place("hero_front.png", G3, T0, END - T0, hb, fade=(0.6, 0.6))
     apply(b.push(h, T0, END, hb, 1.04))
     lb = (680, 250, 560, 324.2)
     lg = b.place("oled_01.png", G4, T0 + 0.3, END - T0 - 0.3, lb, fade=(0.2, 0.6))
     apply(b.pop(lg, T0 + 0.3, lb, 0.98, 0.2))
-    call("place_clip", {"asset": "ranger_startup_voice_8khz.wav", "at": T0 + 0.3, "track": VOICE})
     qb = (1290, 150, 546.8, 620)
     q = b.place("qr_end.png", G2, T0 + 0.7, END - T0 - 0.7, qb, fade=(0.27, 0.6))
     apply(b.pop(q, T0 + 0.7, qb, 0.9, 0.267))
