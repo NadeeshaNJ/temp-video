@@ -1,0 +1,2 @@
+Put the real Ranger photos here (any names; e.g. hero_front.jpg, in_hand.jpg, three_devices.jpg).
+The editing agent crops, stabilises and removes backgrounds: see VIDEO_BRIEF.md section 9.

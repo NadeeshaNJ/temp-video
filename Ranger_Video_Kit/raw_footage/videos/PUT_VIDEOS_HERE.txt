@@ -1,0 +1,2 @@
+Put the real Ranger videos here (any names; e.g. boot_voice.mp4, typing_message.mp4, two_devices_chat.mp4, phone_join.mp4).
+The editing agent crops, stabilises and removes backgrounds: see VIDEO_BRIEF.md section 9.

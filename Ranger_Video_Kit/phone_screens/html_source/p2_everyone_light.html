@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ranger</title>
+<style>
+:root{--bg:#f4f5f2;--card:#fff;--fg:#1d2420;--mute:#6b746f;--line:#dfe3df;--acc:#2f6d4f;--mine:#dcefe3;--bad:#b3261e}
+
+*{box-sizing:border-box}body{margin:0;font:16px/1.4 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+header b{font-size:17px}.st{color:var(--mute);font-size:13px}
+nav{display:flex;background:var(--card);border-bottom:1px solid var(--line)}nav button{flex:1;padding:12px 0;border:0;background:none;color:var(--mute);font-size:15px}
+nav button.on{color:var(--acc);box-shadow:inset 0 -2px var(--acc);font-weight:600}
+main{padding:12px 16px 90px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:center}.mute{color:var(--mute);font-size:13px}
+input,select{width:100%;font-size:16px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg)}
+.btn{display:block;width:100%;padding:13px;border:0;border-radius:10px;background:var(--acc);color:#fff;font-size:16px;font-weight:600;margin-top:10px}
+.sos{background:var(--bad)}.msgs{display:flex;flex-direction:column;gap:6px}
+.m{max-width:85%;padding:8px 11px;border-radius:12px;background:var(--card);border:1px solid var(--line);word-wrap:break-word}
+.m.me{align-self:flex-end;background:var(--mine)}.m small{display:block;color:var(--mute);font-size:12px}
+.compose{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:8px 16px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
+.compose button{margin:0;width:auto;padding:0 18px}.hide{display:none}
+</style></head><body>
+<div id="join" class="hide"><main><h2>Ranger</h2><p class="mute">No mobile network needed: messages go over the Ranger radio network.</p>
+<div class="card"><label>Your name (shown to everyone)</label><input id="nm" maxlength="8" autocomplete="off">
+<button class="btn" onclick="join()">Join</button><p id="jerr" class="mute"></p></div>
+<p class="mute">Tip: if this opened in a small sign-in window, open <b>http://192.168.4.1</b> in Safari or Chrome instead.</p></main></div>
+<div id="app" class="hide">
+<header><div><b id="hn">Ranger</b><div class="st" id="me"></div></div><div class="st" id="hs"></div></header>
+<nav><button id="t0" onclick="tab(0)">Messages</button><button id="t1" onclick="tab(1)">People</button><button id="t2" onclick="tab(2)">SOS</button></nav>
+<main id="v0"><select id="to" onchange="draw()"></select><div class="msgs" id="ms" style="margin-top:10px"></div></main>
+<main id="v1" class="hide"><div id="pp"></div></main>
+<main id="v2" class="hide"><div class="card"><b>Share my location</b><p class="mute">Sends the Ranger's GPS position to everyone.</p><button class="btn" onclick="act('share')">Share location</button></div>
+<div class="card"><b>Emergency</b><p class="mute">Sends SOS with the position to every Ranger.</p><button class="btn sos" onclick="if(confirm('Send SOS to everyone?'))act('sos')">Send SOS</button></div>
+<div class="card"><b>Use this phone's GPS</b><p class="mute">For a Ranger without a GPS fix: it uses your phone's position and passes it on. Your phone warns about the page's certificate once: tap <i>Show details</i>, then <i>visit this website</i>. Keep that page open.</p><a class="btn" style="text-align:center;text-decoration:none" id="gl" href="#">Open GPS page</a></div>
+<p class="mute" id="pos"></p></main>
+<div class="compose" id="cp"><input id="tx" maxlength="120" placeholder="Message" onkeydown="if(event.key=='Enter')send()"><button class="btn" onclick="send()">Send</button></div>
+</div>
+<script>
+localStorage.setItem('rt','123');
+window.fetch=function(u,o){var d={"ok": true, "me": {"id": 11025, "n": "Nadeesha@R1"}, "host": {"n": "Ranger-1", "bat": 80, "gps": 3, "time": "14:35", "fix": true, "lat": 6.927079, "lon": 79.861244}, "people": [{"id": 6657, "n": "Ranger-1", "l": 1, "d": -1, "b": 0, "s": 4, "r": -1}, {"id": 4610, "n": "Kasun", "l": 0, "d": 1200, "b": 205, "s": 3, "r": -1}, {"id": 4867, "n": "Ranger-3", "l": 0, "d": -1, "b": 0, "s": 4, "r": 42.0}, {"id": 9218, "n": "Amaya@R2", "l": 0, "d": 850, "b": 72, "s": 2, "r": -1}, {"id": 11026, "n": "Nimal@R1", "l": 1, "d": -1, "b": 0, "s": 4, "r": -1}], "msgs": [{"f": 6657, "t": 65535, "st": 0, "tm": "14:02", "x": "Team check-in: everyone reply OK"}, {"f": 4610, "t": 65535, "st": 0, "tm": "14:03", "x": "OK, at the river crossing"}, {"f": 9218, "t": 65535, "st": 0, "tm": "14:05", "x": "OK. Water rising near the school"}, {"f": 11025, "t": 65535, "st": 1, "tm": "14:06", "x": "OK, heading to the school with supplies"}, {"f": 4610, "t": 11025, "st": 0, "tm": "14:31", "x": "Where are you?"}, {"f": 11025, "t": 4610, "st": 1, "tm": "14:32", "x": "Near the bridge"}, {"f": 4610, "t": 11025, "st": 0, "tm": "14:33", "x": "Coming, 5 min"}, {"f": 11025, "t": 4610, "st": 0, "tm": "14:35", "x": "Bring the first aid kit"}]};return Promise.resolve({json:function(){return Promise.resolve(d)},text:function(){return Promise.resolve('ok')}})};
+window.alert=function(){};
+setTimeout(function(){var v='everyone';
+ if(v=='join'){document.getElementById('nm').value='Nadeesha';}
+ if(v=='everyone'){tab(0);$('to').value='65535';draw();$('tx').value='On my way';}
+ if(v=='private'){tab(0);$('to').value='4610';draw();}
+ if(v=='people')tab(1);
+ if(v=='sos')tab(2);
+},300);
+</script><script>
+var T=localStorage.getItem('rt')||'',D=null,cur=-1,busy=0,rejoin=0;
+function $(i){return document.getElementById(i)}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function post(u,b){return fetch(u,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b}).then(function(r){return r.json()})}
+function join(n){n=n||$('nm').value.trim();if(!n)return;post('/api/join','name='+encodeURIComponent(n)).then(function(j){if(j.ok){T=j.t;localStorage.setItem('rt',T);localStorage.setItem('rn',n);poll()}else{$('jerr').textContent=j.err;show(0)}})}
+function show(a){$('join').classList.toggle('hide',a);$('app').classList.toggle('hide',!a)}
+function tab(i){cur=i;for(var k=0;k<3;k++){$('v'+k).classList.toggle('hide',k!=i);$('t'+k).classList.toggle('on',k==i)}$('cp').classList.toggle('hide',i!=0)}
+function card(b){return['N','NE','E','SE','S','SW','W','NW'][Math.round(b/45)%8]}
+function dist(m){return m<1000?Math.round(m)+' m':(m/1000).toFixed(1)+' km'}
+function nameOf(id){if(id==65535)return'Everyone';if(id==D.me.id)return'Me';for(var p of D.people)if(p.id==id)return p.n;return id.toString(16)}
+function draw(){if(!D)return;var to=+$('to').value,h='';
+ for(var m of D.msgs){var all=m.t==65535,mine=m.f==D.me.id;if(to==65535?!all:all||!((mine&&m.t==to)||(m.f==to&&m.t==D.me.id)))continue;
+  var st=mine?[' · sending',' · delivered',' · not delivered'][m.st]:'';
+  h+='<div class="m'+(mine?' me':'')+'"><small>'+(mine?'Me':esc(nameOf(m.f)))+' · '+m.tm+st+'</small>'+esc(m.x)+'</div>'}
+ $('ms').innerHTML=h||'<p class="mute">No messages yet.</p>'}
+function render(){var s=$('to'),v=s.value,o='<option value="65535">Everyone</option>',pp='';
+ for(var p of D.people){o+='<option value="'+p.id+'">'+esc(p.n)+'</option>';
+  var where=p.d>=0?dist(p.d)+' '+card(p.b)+' ('+Math.round(p.b)+'°)':'no GPS position';
+  pp+='<div class="card row" onclick="$(\'to\').value='+p.id+';tab(0);draw()"><div><b>'+esc(p.n)+'</b><div class="mute">'+where+(p.r>=0?' · radio '+dist(p.r):'')+'</div></div><div class="mute">'+(p.l?'here':'▮'.repeat(p.s)+'▯'.repeat(4-p.s))+'</div></div>'}
+ s.innerHTML=o;s.value=v||'65535';if(s.selectedIndex<0)s.value='65535';
+ $('pp').innerHTML=pp||'<p class="mute">Nobody else on the network yet.</p>';
+ $('hn').textContent=D.host.n;$('me').textContent='You: '+D.me.n;
+ $('hs').textContent=D.host.time+' · GPS '+(D.host.fix?'fix':'none')+(D.host.bat>=0?' · '+D.host.bat+'%':'');
+ $('pos').textContent=D.host.fix?'Position: '+D.host.lat.toFixed(5)+', '+D.host.lon.toFixed(5):'The Ranger has no GPS fix yet.';draw()}
+function poll(){if(busy)return;busy=1;$('gl').href='https://192.168.4.1/gps#'+T;fetch('/api/poll?t='+T+'&now='+Date.now()).then(function(r){return r.json()}).then(function(j){busy=0;
+ if(!j.ok){var n=localStorage.getItem('rn');if(n&&!rejoin){rejoin=1;join(n)}else show(0);return}
+ rejoin=0;var first=!D;D=j;show(1);if(first)tab(0);render()}).catch(function(){busy=0})}
+function send(){var x=$('tx').value.trim();if(!x)return;post('/api/send','t='+T+'&to='+$('to').value+'&x='+encodeURIComponent(x)).then(function(j){if(j.ok){$('tx').value='';poll()}else alert(j.err)})}
+function act(a){post('/api/'+a,'t='+T).then(function(j){alert(j.ok?(a=='sos'?'SOS sent':'Location sent'):j.err)})}
+poll();setInterval(poll,1500);
+</script></body></html>

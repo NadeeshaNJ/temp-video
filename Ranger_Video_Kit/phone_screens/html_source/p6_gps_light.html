@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ranger GPS</title>
+<style>:root{--bg:#f4f5f2;--fg:#1d2420;--mute:#6b746f;--acc:#2f6d4f}
+
+body{margin:0;padding:24px 16px;font:16px/1.5 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+.big{font-size:22px;font-weight:600}.mute{color:var(--mute);font-size:14px}a{color:var(--acc)}</style></head><body>
+<div class="big" id="st">Asking for your location…</div><p id="dt" class="mute"></p>
+<p class="mute">Keep this page open (screen on): the Ranger gets your position every few seconds and passes it on to the other Rangers.</p>
+<p><a href="http://192.168.4.1/">Back to messages</a></p>
+<script>
+location.hash='#123';Date.prototype.toLocaleTimeString=function(){return '2:35:12 PM'};
+Object.defineProperty(window,'isSecureContext',{value:true});
+navigator.geolocation.watchPosition=function(ok){setTimeout(function(){ok({coords:{latitude:6.927079,longitude:79.861244,accuracy:12}})},100)};
+window.fetch=function(){return Promise.resolve({text:function(){return Promise.resolve('ok')}})};
+</script><script>
+var T=location.hash.slice(1),last=0;
+function $(i){return document.getElementById(i)}
+function report(m){fetch('/gps',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'t='+T+'&err='+encodeURIComponent(m)+'&now='+Date.now()})}
+function sent(p){$('st').textContent='Sharing your position';$('dt').textContent=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5)+' (±'+Math.round(p.coords.accuracy)+' m), sent '+new Date().toLocaleTimeString()}
+function send(p){if(Date.now()-last<3000)return;last=Date.now();
+ fetch('/gps',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'t='+T+'&lat='+p.coords.latitude+'&lon='+p.coords.longitude+'&acc='+p.coords.accuracy+'&now='+Date.now()})
+ .then(function(r){return r.text()}).then(function(x){if(x=='ok')sent(p);else $('st').textContent='The Ranger did not accept it: open this page again from the Ranger page'})
+ .catch(function(){$('st').textContent='Lost the Ranger: is the phone still on its Wi-Fi?'})}
+if(!T)$('st').textContent='Open this page from the Ranger page (SOS tab)';
+else if(!window.isSecureContext||!navigator.geolocation)$('st').textContent='This browser does not give the location to this page';
+else navigator.geolocation.watchPosition(send,function(e){$('st').textContent='No location: '+e.message;report(e.code+' '+e.message);$('dt').textContent=e.code==1?'Allow location for this page (Settings > Privacy > Location Services > Safari Websites).':''},{enableHighAccuracy:true,maximumAge:5000,timeout:30000});
+</script></body></html>
