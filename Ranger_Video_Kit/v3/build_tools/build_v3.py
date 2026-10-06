@@ -12,7 +12,7 @@ W = b.W
 A1 = os.path.join(W, "build/assets")
 V2 = os.path.join(W, "build/v2")
 V3 = os.path.join(W, "build/v3")
-END = 76.0
+END = 87.5
 
 T1, T2, T3, T4, G1, G2, V1, G3, G4, G5, G6, VB, BG, SFX1, SFX2, VOICE, VO, MUSIC = range(18)
 LANES = ["text"] * 4 + ["shape", "shape", "video", "shape", "shape", "shape", "shape", "video", "shape",
@@ -41,7 +41,8 @@ def setup():
         call("remove_track", {"track": t["i"]})
     got = [t["type"] for t in call("inspect", {})["tracks"]]
     assert got == LANES, got
-    want = ["bg.png", "hero_front.png", "card_proto.png", "card_pcb.png", "qr_end.png", "oled_01.png",
+    want = ["bg.png", "hero_front.png", "hero_three.png", "card_proto.png", "card_pcb.png", "card_schem.png",
+            "render_top.png", "render_bottom.png", "qr_end.png", "oled_01.png",
             "oled_07.png", "oled_15.png", "oled_18.png", "oled_20.png", "oled_22.png", "oled_25.png",
             "phone_03.png", "foot_2.webm", "foot_3.webm", "foot_4.webm", "foot_6.webm", "foot_7.webm",
             "sfx_blip.wav", "sfx_pop.wav", "sfx_whoosh.wav", "sfx_chirp.wav"]
@@ -84,7 +85,7 @@ def headline(t0, t1, txt, box=(120, 130, 1200, 110), size=62, lane=T1, red=False
 def bg_music():
     b.place("bg.png", BG, 0, END)
     m = call("place_clip", {"asset": "music_v3.wav", "at": 0, "track": MUSIC})["id"]
-    keys = [(0.0, 0.42), (4.4, 0.42), (4.5, 0.55), (5.8, 0.55), (6.0, 0.21), (70.6, 0.21), (71.0, 0.55)]
+    keys = [(0.0, 0.42), (4.4, 0.42), (4.5, 0.55), (5.8, 0.55), (6.0, 0.21), (81.9, 0.21), (82.3, 0.55)]
     apply([{"tool": "set_volume", "args": {"clip": m, "at": t, "value": v}} for t, v in keys])
 
 
@@ -171,31 +172,64 @@ def s_uses(T0=42.0):
 
 
 def s_built(T0=53.0):
+    kicker(T0 + 0.1, T0 + 13.9, "HOW IT'S BUILT")
+    cap = lambda t0, t1, txt: b.text(T1, t0, t1, txt, (96, 850, 1728, 110), style(72, 900, align="center"),
+                                     anim_in="pop")
+    # breadboard prototype
     pb1 = (442, 150, 1036, 638.6)
-    c = b.place("card_proto.png", G3, T0, 2.12, pb1, fade=(0.12, 0.12))
-    apply(b.pop(c, T0, pb1, 0.94, 0.25) + b.push(c, T0 + 0.25, T0 + 2.0, pb1, 1.04))
-    pb2 = (560, 140, 800, 666)
-    c = b.place("card_pcb.png", G4, T0 + 2.0, 2.0, pb2, fade=(0.0, 0.12))
-    apply(b.pop(c, T0 + 2.0, pb2, 0.94, 0.25) + b.push(c, T0 + 2.25, T0 + 4.0, pb2, 1.04))
-    b.text(T1, T0 + 0.15, T0 + 3.95, "Designed from scratch", (96, 850, 1728, 110), style(76, 900, align="center"),
+    c = b.place("card_proto.png", G3, T0, 2.6, pb1, fade=(0.12, 0.1))
+    apply(b.pop(c, T0, pb1, 0.94, 0.25) + b.push(c, T0 + 0.25, T0 + 2.6, pb1, 1.05))
+    cap(T0 + 0.15, T0 + 2.45, "It started on a breadboard")
+    vo("b1", T0 + 0.2)
+    # schematic
+    sb = (530.6, 140, 858.8, 640)
+    c = b.place("card_schem.png", G4, T0 + 2.5, 2.6, sb, fade=(0.0, 0.1))
+    apply(b.pop(c, T0 + 2.5, sb, 0.94, 0.25) + b.push(c, T0 + 2.75, T0 + 5.1, sb, 1.06))
+    cap(T0 + 2.65, T0 + 4.95, "Schematic, designed from scratch")
+    vo("b2", T0 + 2.7)
+    b.sfx("sfx_whoosh.wav", T0 + 2.3, lane=SFX2, vol=0.3)
+    # the custom PCB: hero moment, slow push into the board
+    pcb = (500, 40, 920, 766)
+    c = b.place("card_pcb.png", G3, T0 + 5.0, 4.1, pcb, fade=(0.0, 0.1))
+    apply(b.pop(c, T0 + 5.0, pcb, 0.9, 0.3) + b.push(c, T0 + 5.3, T0 + 9.1, pcb, 1.12))
+    b.text(T1, T0 + 5.15, T0 + 8.95, "Custom 4-layer PCB", (96, 850, 1728, 130), style(96, 900, align="center"),
            anim_in="pop")
-    vo("built", T0 + 0.2)
+    b.sfx("sfx_pop.wav", T0 + 5.0, lane=SFX1, vol=0.5)
+    b.sfx("sfx_whoosh.wav", T0 + 4.8, lane=SFX2, vol=0.3)
+    # front and back renders
+    rt = (420, 90, 555.8, 740)
+    rb = (960, 90, 538.7, 740)
+    c = b.place("render_top.png", G4, T0 + 9.0, 2.5, rt, fade=(0.0, 0.1))
+    apply(b.pop(c, T0 + 9.0, rt, 0.92, 0.3))
+    c = b.place("render_bottom.png", G5, T0 + 9.15, 2.35, rb, fade=(0.0, 0.1))
+    apply(b.pop(c, T0 + 9.15, rb, 0.92, 0.3))
+    cap(T0 + 9.15, T0 + 11.45, "Designed & built by NadeeshaNJ")
+    b.sfx("sfx_pop.wav", T0 + 9.0, lane=SFX1, vol=0.35)
+    b.sfx("sfx_pop.wav", T0 + 9.15, lane=SFX2, vol=0.35)
+    # real assembled devices
+    hb = (655.5, 40, 609, 760)
+    c = b.place("hero_three.png", G3, T0 + 11.5, 2.5, hb, fade=(0.0, 0.12))
+    apply(b.pop(c, T0 + 11.5, hb, 0.92, 0.3) + b.push(c, T0 + 11.8, T0 + 14.0, hb, 1.05))
+    cap(T0 + 11.65, T0 + 13.9, "Real, working devices")
+    vo("b4", T0 + 11.6)
+    # what's inside
     keys = ["esp32", "lora", "oled", "mic", "battery", "gps"]
     lanes = [G1, G2, G3, G4, G5, G6]
     cw, ch = 539.4, 434.8
     xs, ys = (95, 690, 1285), (110, 560)
-    G0 = T0 + 4.0
-    b.text(T4, G0 + 0.1, G0 + 6.1, "WHAT'S INSIDE", (96, 40, 1728, 46),
+    G0 = T0 + 14.0
+    b.text(T4, G0 + 0.1, G0 + 7.4, "WHAT'S INSIDE", (96, 40, 1728, 46),
            style(28, 800, MINT, align="center", spacing=4, shadow=False), anim_in="fade", srt=False)
     for k, key in enumerate(keys):
         t0 = round(G0 + 0.1 + 0.3 * k, 3)
         box = (xs[k % 3], ys[k // 3], cw, ch)
-        c = b.place(f"part_{key}.png", lanes[k], t0, round(G0 + 6.2 - t0, 3), box, fade=(0.12, 0.2))
+        c = b.place(f"part_{key}.png", lanes[k], t0, round(G0 + 7.5 - t0, 3), box, fade=(0.12, 0.2))
         apply(b.pop(c, t0, box, 0.9, 0.25))
         b.sfx("sfx_pop.wav", t0, lane=SFX1 if k % 2 == 0 else SFX2, vol=0.3)
+    vo("b3", G0 + 0.3)
 
 
-def s_cost(T0=63.2):
+def s_cost(T0=74.5):
     hb = (150, 60, 658.4, 960)
     h = b.place("hero_front.png", G3, T0, 2.8, hb, fade=(0.12, 0.2))
     apply(b.pop(h, T0, hb, 0.94, 0.3) + b.push(h, T0 + 0.3, T0 + 2.8, hb, 1.04))
@@ -208,7 +242,7 @@ def s_cost(T0=63.2):
     b.sfx("sfx_pop.wav", T0 + 0.2, lane=SFX2, vol=0.5)
 
 
-def s_end(T0=66.0):
+def s_end(T0=77.5):
     hb = (110, 20, 548.4, 800)
     h = b.place("hero_front.png", G3, T0, END - T0, hb, fade=(0.3, 0.6))
     apply(b.push(h, T0, END, hb, 1.04))

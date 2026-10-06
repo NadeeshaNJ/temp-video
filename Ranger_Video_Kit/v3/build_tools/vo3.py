@@ -29,7 +29,10 @@ LINES = {
     "u2": "Remote patrols!",
     "u3": "Lost hikers!",
     "u4": "Anyone, anywhere the network can't reach!",
-    "built": "Designed from scratch, on a custom PCB. With an ESP32, a LoRa radio, GPS, and a battery that lasts for days on standby.",
+    "b1": "It all started on a breadboard.",
+    "b2": "Then came the schematic, and a custom four-layer PCB, designed from scratch!",
+    "b4": "From design, to real, working devices!",
+    "b3": "Packed with an ESP32, a LoRa radio, GPS, and a battery that lasts for days on standby.",
     "cost": "All for around three thousand rupees!",
     "end": "Ranger. Stay connected, anywhere. Scan the code to learn more!",
 }

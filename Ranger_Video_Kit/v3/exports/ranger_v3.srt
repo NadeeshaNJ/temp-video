@@ -63,14 +63,26 @@ Lost hikers!
 Anyone, anywhere the network can't reach!
 
 17
-00:00:53,200 --> 00:01:02,804
-Designed from scratch, on a custom PCB. With an ESP32, a LoRa radio, GPS, and a battery that lasts for days on standby.
+00:00:53,200 --> 00:00:54,875
+It all started on a breadboard.
 
 18
-00:01:03,400 --> 00:01:05,390
-All for around three thousand rupees!
+00:00:55,700 --> 00:01:00,485
+Then came the schematic, and a custom four-layer PCB, designed from scratch!
 
 19
-00:01:06,800 --> 00:01:10,485
+00:01:04,600 --> 00:01:07,028
+From design, to real, working devices!
+
+20
+00:01:07,300 --> 00:01:14,268
+Packed with an ESP32, a LoRa radio, GPS, and a battery that lasts for days on standby.
+
+21
+00:01:14,700 --> 00:01:16,690
+All for around three thousand rupees!
+
+22
+00:01:18,300 --> 00:01:21,985
 Ranger. Stay connected, anywhere. Scan the code to learn more!
 
