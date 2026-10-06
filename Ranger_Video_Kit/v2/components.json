@@ -1,0 +1,106 @@
+{
+  "project": "Ranger",
+  "save_to": "assets/components/",
+  "components": [
+    {
+      "key": "esp32",
+      "file": "esp32-wroom-32e.jpg",
+      "name": "ESP32-WROOM-32E",
+      "role": "Main processor",
+      "caption": "Dual-core microcontroller module that runs the UI, Codec2 voice compression, AES-128 encryption and the mesh routing.",
+      "specs": [
+        "2 cores, 240 MHz",
+        "Wi-Fi 802.11 b/g/n",
+        "Bluetooth 4.2 + BLE",
+        "4 MB flash",
+        "18 × 25.5 mm"
+      ],
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20230202_Espressif-Systems-ESP32-WROOM-32E-N4_C701341_front.jpg",
+      "source": "https://www.lcsc.com/product-detail/C701341.html",
+      "datasheet": "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf"
+    },
+    {
+      "key": "lora",
+      "file": "ebyte-e28-2g4m27sx.jpg",
+      "name": "EBYTE E28-2G4M27SX",
+      "role": "LoRa radio",
+      "caption": "2.4 GHz LoRa transceiver that carries voice and text between Ranger devices with no towers or SIM cards.",
+      "specs": [
+        "2.4 to 2.5 GHz",
+        "27 dBm (500 mW)",
+        "up to 8 km (maker rating)",
+        "SPI",
+        "15 × 20 mm"
+      ],
+      "image_url": "https://www.cdebyte.com/Uploadfiles/Picture/2022-10-13/202210131352506103.jpg",
+      "source": "https://www.cdebyte.com/products/E28-2G4M27SX",
+      "datasheet": null
+    },
+    {
+      "key": "oled",
+      "file": "ssd1306-oled-panel.jpg",
+      "name": "SSD1306 0.96\" OLED",
+      "role": "Display",
+      "caption": "Bare OLED glass panel with the SSD1306 controller built into its flex cable. Shows messages, menus, battery level and signal strength.",
+      "specs": [
+        "128 × 64 px",
+        "0.96 inch",
+        "SSD1306",
+        "I2C / SPI",
+        "self-lit pixels"
+      ],
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20230316_UG-Univision-Semicon-UG-2864KSWLG01_C113322_front.jpg",
+      "source": "https://www.lcsc.com/product-detail/C113322.html",
+      "datasheet": null
+    },
+    {
+      "key": "mic",
+      "file": "ics-43434-mic.jpg",
+      "name": "TDK ICS-43434",
+      "role": "Microphone",
+      "caption": "Bottom-port digital MEMS microphone soldered on the PCB. Sends speech to the ESP32 as 24-bit I2S audio.",
+      "specs": [
+        "LGA-6, 3.5 × 2.7 mm",
+        "I2S digital out",
+        "24-bit",
+        "−26 dBFS sensitivity"
+      ],
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20240716_TDK-InvenSense-ICS-43434_C5656610_front.jpg",
+      "source": "https://www.lcsc.com/product-detail/C5656610.html",
+      "datasheet": "https://www.lcsc.com/datasheet/lcsc_datasheet_2312010321_TDK-InvenSense-ICS-43434_C5656610.pdf"
+    },
+    {
+      "key": "amp",
+      "file": "max98357a-amp.jpg",
+      "name": "MAX98357A",
+      "role": "Speaker amplifier",
+      "caption": "I2S class D amplifier chip: converts digital audio to sound and drives the speaker directly.",
+      "specs": [
+        "TQFN-16, 3 × 3 mm",
+        "I2S in, no MCLK",
+        "class D",
+        "2.7 to 5.5 V"
+      ],
+      "image_url": "https://assets.lcsc.com/images/lcsc/900x900/20250904_MAXIM-MAX98357AETE-T_C910544_front.jpg",
+      "source": "https://www.lcsc.com/product-detail/Audio-Power-OpAmps_Analog-Devices-Inc-Maxim-Integrated-MAX98357AETE-T_C910544.html",
+      "datasheet": "https://www.lcsc.com/datasheet/lcsc_datasheet_2201242100_Analog-Devices-Inc--Maxim-Integrated-MAX98357AETE-T_C910544.pdf"
+    },
+    {
+      "key": "gps",
+      "file": "speedybee-bz-251-gps.jpg",
+      "name": "SpeedyBee BZ-251",
+      "role": "GPS + compass",
+      "caption": "GNSS module with a built-in compass, used to share each user's position and heading across the mesh.",
+      "specs": [
+        "u-blox M10",
+        "QMC5883 compass",
+        "GPS, GLONASS, BDS, Galileo",
+        "5 V, UART + I2C",
+        "25 × 25 × 8 mm"
+      ],
+      "image_url": "https://www.flyingtech.co.uk/wp-content/uploads/2024/03/BZ-251-GPS-with-5883-Compass.jpg",
+      "source": "https://www.flyingtech.co.uk/product/speedybee-bz-251-gps-with-5883-compass/",
+      "datasheet": null
+    }
+  ]
+}

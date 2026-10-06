@@ -6,6 +6,7 @@ Built in CutWire Drift 0.8.0 (nightly AppImage, run headless) with the
 | File | What it is |
 |---|---|
 | `ranger_main_1080p.mp4` | Main video, 1920x1080, 30 fps, 2:10, H.264 + AAC, mastered to -14 LUFS |
+| `ranger_main_master_1080p_h265_10bit.mp4` | Near-lossless master: H.265 10-bit (CRF 12), lossless FLAC audio, rendered from the lossless footage clips, -14 LUFS / -1.4 dBTP. Use this for re-editing or re-uploading; use the H.264 file for quick sharing (it plays everywhere). |
 | `ranger_main.srt` | Captions file (the on-screen text, with times) |
 | `ranger_thumbnail.jpg` | 1920x1080 thumbnail ("WORKS WITHOUT SIGNAL") |
 
