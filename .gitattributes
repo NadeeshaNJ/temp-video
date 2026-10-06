@@ -11,3 +11,6 @@ Ranger_Video_Kit/drift_project/**/*.mp4 -filter -diff -merge
 Ranger_Video_Kit/drift_project/**/*.mkv -filter -diff -merge
 Ranger_Video_Kit/drift_project/**/*.wav -filter -diff -merge
 Ranger_Video_Kit/drift_project/*.drift -filter -diff -merge
+Ranger_Video_Kit/v2/**/*.mp4 -filter -diff -merge
+Ranger_Video_Kit/v2/**/*.wav -filter -diff -merge
+Ranger_Video_Kit/v2/**/*.drift -filter -diff -merge
